@@ -16,9 +16,22 @@
             array("status" => $tweet)
         );
 
-        if ($twitter->getLastHttpCode() == 200) {
-            return true;
+        $statusCode = $twitter->getLastHttpCode();
+        if ($statusCode != 200) {
+            $errMsgs = getError($twitter->getLastBody());
+            foreach ($errMsgs as $msg) {
+                echo "error msg : " . $msg . "\r\n";
+            }
+            return false;
         }
-        return false;
+        return true;
+    }
+
+    function getError($lastBody) {
+        $errorMessages = [];
+        foreach (($lastBody->errors) as $key => $stdObj) {
+            $errorMessages[$key] = $stdObj->message;
+        }
+        return $errorMessages;
     }
 ?>
