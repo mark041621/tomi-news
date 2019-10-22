@@ -5,13 +5,14 @@
 
     list($dateArray, $newsArray) = getNews();
 
-    $tweet = "富田美憂さんの最新ニュース\r\n\r\n";
+    $tweet = "富田美憂さん最新NEWS\r\n\r\n";
     for ($i=0; $i<2; $i++) {
         $tweet = $tweet . $dateArray[$i] . "\r\n";
         $tweet = $tweet . $newsArray[$i] . "\r\n\r\n";
     }
     
-    if (!postTweet($tweet)) {
+    $isPosted = postTweet($tweet);
+    if (!$isPosted) {
         echo "post faild\n";
         return;
     }
